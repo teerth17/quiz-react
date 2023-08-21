@@ -26,6 +26,20 @@ const AppProvider = ({ children }) => {
     difficulty: "easy",
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setQuiz({ ...quiz, [name]: value });
+  };
+
+  const handleSumbit = (e) => {
+    e.preventDefault();
+    const { amount, category, difficulty } = quiz;
+
+    const url = `${API_ENDPOINT}amount=${amount}&difficulty=${difficulty}&category=${table[category]}&type=multiple`;
+    fetchQuestion(url);
+  };
   return <AppContext.Provider value="hello">{children}</AppContext.Provider>;
 };
 // make sure use
