@@ -47,6 +47,24 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const nextQuestion = () => {
+    setIndex((oldIndex) => {
+      const index = index + 1;
+      if (index > questions.length - 1) {
+        // openModal();
+        return 0;
+      } else {
+        return index;
+      }
+    });
+  };
+
+  const checkAnswer = (value) => {
+    if (value) {
+      setCorrect((oldState) => oldState + 1);
+    }
+  };
+
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -60,7 +78,26 @@ const AppProvider = ({ children }) => {
     const url = `${API_ENDPOINT}amount=${amount}&difficulty=${difficulty}&category=${table[category]}&type=multiple`;
     fetchQuestion(url);
   };
-  return <AppContext.Provider value="hello">{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider
+      value={{
+        waiting,
+        loading,
+        questions,
+        index,
+        correct,
+        error,
+        isModalOpen,
+        nextQuestion,
+        checkAnswer,
+        quiz,
+        handleChange,
+        handleSumbit,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 };
 // make sure use
 export const useGlobalContext = () => {
