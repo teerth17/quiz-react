@@ -15,8 +15,15 @@ function App() {
     nextQuestion,
     checkAnswer,
   } = useGlobalContext();
+  if (waiting) {
+    return <SetupForm />;
+  }
+  if (loading) {
+    return <Loading />;
+  }
 
   const { question, incorrect_answers, correct_answer } = questions[index];
+  // Rest of the code using the destructured properties
   let answers = [...incorrect_answers];
   const tempIndex = Math.floor(Math.random() * 4);
   if (tempIndex === 3) {
@@ -27,7 +34,7 @@ function App() {
   }
   return (
     <main>
-      {/* <Modal />   */}
+      <Modal />
       <section className="quiz">
         <p className="coorect-answers">
           correct answers : {correct} / {index}
